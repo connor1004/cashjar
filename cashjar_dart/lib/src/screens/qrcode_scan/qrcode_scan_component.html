@@ -1,0 +1,9 @@
+<video autoplay class="scan-video" [ngClass]="imageUrl == '' ? 'show' : ''"></video>
+<img class="scan-image" [src]="imageUrl" [ngClass]="imageUrl != '' ? 'show' : ''">
+<material-fab
+  (trigger)="mediaCapture.click()"
+  class="camera-button"
+>
+  <material-icon icon="add_a_photo"></material-icon>
+</material-fab>
+<input #mediaCapture type="file" (change)="handleFileChange(mediaCapture.files)">

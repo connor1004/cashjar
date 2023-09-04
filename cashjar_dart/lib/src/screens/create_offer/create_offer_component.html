@@ -1,0 +1,60 @@
+<div class="url-error" *ngIf="urlError != ''">
+  {{urlError}}
+</div>
+<div class="offer-message layout vertical flex">
+  <div *ngIf="offer != null" class="offer layout center vertical">
+    <a [href]="offer.imageUrl" target="_blank">
+      <img [src]="offer.imageUrl" alt="Product image">
+    </a>
+    <h2 class="product-name">{{offer.name == '' ? 'Title' : offer.name}}</h2>
+    <p class="price">{{offer.priceText == '' ? 'Price' : offer.priceText}}</p>
+    <p class="description">{{offer.description == '' ? 'Description' : offer.description}}</p>
+    <p class="client">client = {{offer.context.cChatId}}</p>
+  </div>
+  <div class="syntax-error" *ngIf="syntaxError">
+    Update message should start with "set #key ".<br/>
+    "key" can be one of title, priceText, desc, offerName, client, customerId, and clientName.
+  </div>
+  <div [ngClass]="showNoBarcodes" class="no-qr-code">
+    No Qr code found. Please try again.
+  </div>
+</div>
+<material-button icon class="close-create-offer" (trigger)="handleCloseButton">
+  <material-icon icon="close"></material-icon>
+</material-button>
+<div class="bottom-part">
+  <message-input
+    [(message)]="inputText"
+    [inputDisabled]="urlError != ''"
+    (messageTrigger)="updateOffer()"
+    (contentChanged)="handleKeyPress()"
+    (imageChanged)="handleCameraChange"
+    [cameraAsNormalButton]="true"
+    (cameraClicked)="handleCameraClicked"
+  ></message-input>
+  <div class="action-bar layout horizontal center">
+    <div class="action-group layout horizontal center flex">
+      <input #mediaCapture type="file" accept="image/*,capture=camera" (change)="setImage(mediaCapture.files)">
+      <material-button icon (trigger)="mediaCapture.click()">
+        <material-icon icon="add_photo_alternate"></material-icon>
+      </material-button>
+      <material-button (trigger)="handleButtonClick('title')">
+        Title
+      </material-button>
+      <material-button (trigger)="handleButtonClick('priceText')">
+        Price
+      </material-button>
+      <material-button (trigger)="handleButtonClick('desc')">
+        Desc
+      </material-button>
+      <material-button (trigger)="handleButtonClick('client')">
+        Client
+      </material-button>
+    </div>
+    <a [href]="publishLink" target="_blank">
+      <material-button>
+        Publish
+      </material-button>
+    </a>
+  </div>
+</div>

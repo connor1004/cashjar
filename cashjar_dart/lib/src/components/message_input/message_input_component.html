@@ -1,0 +1,40 @@
+<div class="input-group layout horizontal center flex">
+  <material-fab mini [disabled]="inputDisabled" *ngIf="!isRecording">
+    <material-icon icon="sentiment_satisfied_alt"></material-icon>
+  </material-fab>
+  <material-icon icon="mic" class="mic-icon" *ngIf="isRecording" [ngClass]="showingMic ? 'show' : ''"></material-icon>
+  <material-input
+    class="flex input-message"
+    label="Type a message"
+    multiline
+    [(ngModel)]="message"
+    (keydown.enter)="handleEnter($event)"
+    (inputKeyPress)="handleKeyPress"
+    (change)="handleKeyPress"
+    [disabled]="inputDisabled || isRecording"
+  ></material-input>
+  <material-fab mini (trigger)="attachment.click()" [disabled]="inputDisabled" *ngIf="!isRecording">
+    <material-icon icon="attach_file" class="attach_file"></material-icon>
+  </material-fab>
+  <material-fab mini
+    (trigger)="cameraAsNormalButton ? handleCameraClicked() : mediaCapture.click()"
+    [disabled]="inputDisabled"
+    *ngIf="!isRecording"
+  >
+    <material-icon icon="camera_alt"></material-icon>
+  </material-fab>
+  <material-button mini
+      (trigger)="handleCancelClicked"
+      *ngIf="isRecording"
+    >
+      Cancel
+    </material-button>
+</div>
+<input #attachment type="file" accept="image/*" (change)="handleAttachment(attachment.files)">
+<input #mediaCapture type="file" (change)="handleImageChange(mediaCapture.files)">
+<material-fab mini class="green" *ngIf="message == '' && !showSendButton" [disabled]="inputDisabled" (trigger)="handleMicClicked">
+  <material-icon icon="mic"></material-icon>
+</material-fab>
+<material-fab mini class="green" *ngIf="message != '' || showSendButton" (trigger)="sendTextMessage()" [disabled]="inputDisabled">
+  <material-icon icon="send"></material-icon>
+</material-fab>

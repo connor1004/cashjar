@@ -1,0 +1,64 @@
+:host {
+  background-color: #eae0da;
+  width: 100%;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.mic-icon {
+  padding-left: 8px;
+  padding-right: 8px;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+
+.mic-icon.show {
+  opacity: 1;
+}
+
+material-fab.green {
+  background-color: #0f9d58;
+  color: #fff;
+}
+
+material-icon.attach_file {
+  transform: rotate(-45deg);
+}
+
+.input-group {
+  background-color: #fff;
+  border-radius: 20px;
+  margin: 5px;
+}
+
+.input-group material-fab {
+  margin: 0;
+}
+
+/* message input box style */
+material-input.input-message {
+  width: 50px;
+}
+
+material-input.input-message ::ng-deep .bottom-section {
+  display: none;
+}
+
+material-input.input-message ::ng-deep .baseline .underline {
+  display: none;
+}
+
+material-input.input-message ::ng-deep .baseline .top-section {
+  margin-bottom: 0;
+}

@@ -1,0 +1,17 @@
+header.header {
+  background-color: #353334;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 800px;
+  z-index: 1001;
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 10px 20px;
+}

@@ -1,0 +1,102 @@
+<div class="url-error" *ngIf="urlError != ''">
+  {{urlError}}
+</div>
+<div class="offer-message layout vertical flex">
+  <div *ngIf="offer != null" class="offer offer-sticky layout center vertical">
+    <a [href]="offer.imageUrl" target="_blank">
+      <img [ngClass]="imageClass" [src]="offer.imageUrl">
+    </a>
+  </div>
+  <div *ngIf="offer != null" class="offer layout center vertical">
+    <h2 class="product-name">{{offer.name}}</h2>
+    <p class="price">{{offer.priceText}}</p>
+    <p class="description">{{offer.description}}</p>
+  </div>
+  <div [ngClass]="{'show': showTicker}" class="offer offer-ticker layout center vertical">
+    <div class="ticker">
+      {{exTicker}}
+    </div>
+  </div>
+  <div class="messages flex layout vertical end-justifed">
+    <div
+      *ngFor="let msg of messages"
+      [ngClass]="getMessageClass(msg)"
+    >
+      <div class="message-card">
+        <a [href]="msg.url" target="_blank" *ngIf="msg.type == 'image' || msg.type == 'other'">
+          <img [src]="msg.url" class="message-image" *ngIf="msg.type == 'image'">
+          <div class="attached-file layout horizontal center" *ngIf="msg.type == 'other'">
+            <material-icon icon="description"></material-icon>
+            <span class="filename">{{msg.filename}}</span>
+          </div>
+        </a>
+        <audio *ngIf="msg.type == 'voice' || msg.type == 'audio'"
+          controls
+          [src]="msg.url"
+        >
+          Your browser does not support the
+          <code>audio</code> element.
+        </audio>
+        <video *ngIf="msg.type == 'video'"
+          controls
+          [src]="msg.url"
+        >
+          Your browser does not support the
+          <code>video</code> element.
+        </video>
+        <div class="text" *ngIf="msg.type != 'voice'">{{msg.text}}</div>
+        <div class="sent-on">{{getFormattedTime(msg.sentOn)}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bottom-part">
+  <div class="attachment-part" *ngIf="attachedFileType != ''">
+    <img class="attached-image" [ngClass]="attachImageClass" [src]="attachedImageSrc" *ngIf="attachedImageSrc != ''">
+    <div class="attached-file layout horizontal center center-center" *ngIf="attachedFileType != 'image'">
+      <material-icon icon="description"></material-icon>
+      <span class="filename">{{attachedFileName}}</span>
+    </div>
+    <material-button icon class="close-attachment" (trigger)="handleCloseAttach" *ngIf="!isUploading">
+      <material-icon icon="close"></material-icon>
+    </material-button>
+    <material-progress [activeProgress]="progressValue" *ngIf="isUploading"></material-progress>
+  </div>
+  <message-input
+    [(message)]="inputText"
+    [inputDisabled]="urlError != '' || isLoading"
+    (messageTrigger)="sendMessage()"
+    (contentChanged)="handleKeyPress()"
+    (imageChanged)="handleFileChange"
+    (attached)="handleFileChange"
+    [showSendButton]="showSendButton"
+    (micClicked)="handleMicClicked"
+    (cancelClicked)="handleCancelClicked"
+    [micAllowed]="true"
+    [isRecording]="isRecording"
+    [showingMic]="showingMic"
+  ></message-input>
+  <div class="action-bar layout horizontal center" *ngIf="isPromotor">
+    <div class="action-group layout horizontal center flex">
+      <material-button icon [disabled]="urlError != '' || isLoading">
+        <material-icon icon="shopping_cart"></material-icon>
+      </material-button>
+      <material-button icon [disabled]="urlError != '' || isLoading">
+        <material-icon icon="perm_contact_calendar"></material-icon>
+      </material-button>
+      <material-button icon [disabled]="urlError != '' || isLoading">
+        <material-icon icon="person"></material-icon>
+      </material-button>
+      <material-button icon [disabled]="urlError != '' || isLoading">
+        <material-icon icon="redeem"></material-icon>
+      </material-button>
+    </div>
+    <material-button 
+      class="red"
+      (trigger)="handleCreateOffer"
+      [disabled]="urlError != '' || isLoading"
+    >
+      Create
+    </material-button>
+  </div>
+</div>

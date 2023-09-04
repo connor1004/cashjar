@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "proto";
+
+message OfferResponse {
+    string id = 1;
+    string offerUrl = 2;
+    bool status = 3;
+}
+
+message OfferId {
+    string id = 1;
+}
+
+message OfferContext {
+    string cChatId = 1;
+    string clientName = 2;
+    string customerId = 3;
+    string promotorId = 4;
+}
+
+message Offer {
+    string imageUrl = 1;
+    string name = 2;
+    string offerName = 3;
+    float price = 4;
+    string priceText = 5;
+    string ticker = 6;
+    OfferContext offerContext = 7;
+    string offerSiteName = 8;
+    string id = 9;
+}
+
+service OfferService {
+    rpc CreateOffer(Offer) returns (OfferResponse) {};
+    rpc GetOffer (OfferId) returns (Offer) {};
+    rpc UpdateOffer (Offer) returns (OfferResponse) {};
+}
